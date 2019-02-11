@@ -1,8 +1,0 @@
-// https://github.com/rchain/rchain/tree/master/rholang/examples (MIT License)
-
-new helloWorld in {
-  contract helloWorld(name) = {
-    "Hello, ".display(name, "!\n")
-  } |
-  helloWorld("Joe")
-}

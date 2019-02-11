@@ -1,0 +1,47 @@
+
+new binarySearch, tailRec, stdout(`rho:io:stdout`) in {
+
+  /**
+   * Find an item in a sorted list in O(log n).
+   * @param haystack A sorted list to search in
+   * @param needle The item to be found in the haystack
+   * @return The needle's index in the haystack
+   */
+  contract binarySearch(@haystack, @needle, return) = {
+    tailRec!(0, haystack.length() - 1, haystack, needle, *return)
+  }
+  |
+
+  contract tailRec(@min, @max, @haystack, @needle, return) = {
+
+    // I can't wait until rholang has let mid = (min _ max) / 2
+
+    // Done searching
+    if (min == max) {
+      if (haystack.nth(min) == needle){
+        return!(min)
+      }
+      else {
+        return!(Nil)
+      }
+    }
+    else if (needle <= haystack.nth((max + min) / 2)) {
+      tailRec!(min, (max + min) / 2, haystack, needle, *return)
+    }
+    else {
+      tailRec!(((max + min) / 2) + 1, max, haystack, needle, *return)
+    }
+  }
+  |
+
+  // Unit tests below
+
+  // Expected output: 5
+  binarySearch!([1,3,4,6,7,9,23, 100], 9, *stdout)|
+
+  // Expected output: 5
+  binarySearch!([1,3,4,6,7,9,23], 9, *stdout)|
+
+  // Expected output: Nil
+  binarySearch!([1,3,4,6,7,9,23], 10, *stdout)
+}
